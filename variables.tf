@@ -1,3 +1,4 @@
+# HPCS service
 variable "service_name" {
   type        = string
   description = "Name of HPCS Instance"
@@ -8,6 +9,12 @@ variable "region" {
   default     = "us-south"
   type        = string
   description = "Location of HPCS Instance"
+}
+
+variable "provision" {
+  type        = bool
+  description = "Flag indicating that hpcs instance should be provisioned. If 'false' then the instance is expected to already exist."
+  default     = false
 }
 
 variable "plan" {
@@ -78,6 +85,7 @@ variable "tke_files_path" {
   default     = "/Users/aparnamane/tke-files"
 }
 
+# KMS key creation
 variable "name" {
   description = "Name of the Key"
   type        = string
@@ -122,6 +130,12 @@ variable "expiration_date" {
   description = "Expiration_date of the Key"
   type        = string
   default     = null
+}
+
+variable "interval_month" {
+  description = "Specifies the key rotation time interval in months, with a minimum of 1, and a maximum of 12"
+  type        = number
+  default     = 3
 }
 
 # HPCS policies 

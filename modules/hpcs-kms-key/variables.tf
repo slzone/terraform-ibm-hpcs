@@ -47,3 +47,15 @@ variable "force_delete" {
   default     = null
   type        = bool
 }
+
+variable "interval_month" {
+  description = "Specifies the key rotation time interval in months, with a minimum of 1, and a maximum of 12"
+  type        = number
+  default     = 3
+}
+
+variable "dual_auth_enabled" {
+  description = "If set to true, Key Protect enables a dual authorization policy on a single key."
+  type        = bool
+  default     = false
+}

@@ -8,18 +8,22 @@ curl -X PUT \
 -H "authorization: ${ACCESS_TOKEN}" \
 -H "bluemix-instance: ${HPCS_INSTANCE_ID}" \
 -H "content-type: application/vnd.ibm.kms.policy+json" \
--d '{
-     "metadata": {
+-d "$(cat <<EOF
+{
+    "metadata": {
        "collectionType": "application/vnd.ibm.kms.policy+json",
        "collectionTotal": 1
-     },
-     "resources": [
+    },
+    "resources": [
        {
-         "policy_type": "dualAuthDelete",
+        "policy_type": "dualAuthDelete",
          "policy_data": {
-           "enabled": true
-         }
-       }
-     ]
-   }'
+           "enabled": ${DUAL_AUTH_DELETION_ENABLED}
+          }
+        }
+    ]
+}
+EOF
+)"
+
 

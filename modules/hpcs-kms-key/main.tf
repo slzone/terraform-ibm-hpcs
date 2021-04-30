@@ -13,4 +13,13 @@ resource "ibm_kms_key" "key" {
   encrypted_nonce = (var.encrypted_nonce != null ? var.encrypted_nonce : null)
   iv_value        = (var.iv_value != null ? var.iv_value : null)
   expiration_date = (var.expiration_date != null ? var.expiration_date : null)
+
+  policies {
+    rotation {
+      interval_month = var.interval_month
+    }
+    dual_auth_delete {
+      enabled = var.dual_auth_enabled
+    }
+  }
 }

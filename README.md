@@ -2,6 +2,8 @@
 
 Provisions an instance of hpcs in the account.
 
+## TBD - HPCS initialization
+
 ## Example usage
 
 ```terraform-hcl

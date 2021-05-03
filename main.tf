@@ -6,7 +6,7 @@ data "ibm_resource_group" "rg_name" {
 # Create hpcs instance if provision flag is true
 module "hpcs_instance" {
   provision              = var.provision
-  source                 = "../../modules/hpcs-instance"
+  source                 = "./modules/hpcs-instance"
   resource_group_name    = data.ibm_resource_group.rg_name.id
   region                 = var.region
   name_prefix            = var.name_prefix
@@ -24,7 +24,7 @@ data "ibm_resource_instance" "hpcs_instance" {
 
 # Download the input.json file from COS bucket
 module "download_from_cos" {
-  source          = "../../modules/hpcs-initialisation/download-from-cos"
+  source          = "./modules/hpcs-initialisation/download-from-cos"
   api_key         = var.api_key
   cos_crn         = var.cos_crn
   endpoint        = var.endpoint
@@ -35,7 +35,7 @@ module "download_from_cos" {
 # Initialize the HPCS instance if initialize flag is true
 module "hpcs_init" {
   count              = var.initialize ? 1 : 0
-  source             = "../../modules/hpcs-initialisation/hpcs-init"
+  source             = "./modules/hpcs-initialisation/hpcs-init"
   depends_on         = [module.download_from_cos]
   tke_files_path     = var.tke_files_path
   input_file_name    = var.input_file_name
@@ -44,7 +44,7 @@ module "hpcs_init" {
 
 # Uplaod the signature key to provided COS bucket
 module "upload_to_cos" {
-  source             = "../../modules/hpcs-initialisation/upload-to-cos"
+  source             = "./modules/hpcs-initialisation/upload-to-cos"
   depends_on         = [module.hpcs_init]
   api_key            = var.api_key
   cos_crn            = var.cos_crn
@@ -82,7 +82,7 @@ resource "null_resource" "enable_policies" {
 
 # Create kms key
 module "ibm-hpcs-kms-key" {
-  source          = "../../modules/hpcs-kms-key/"
+  source          = "./modules/hpcs-kms-key/"
   instance_id     = data.ibm_resource_instance.hpcs_instance.guid
   name            = var.name
   standard_key    = var.standard_key
